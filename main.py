@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from passlib.hash import pbkdf2_sha256 as sha256
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Change this to a random secret key
@@ -20,7 +21,8 @@ with app.app_context():
 
 @app.route('/')
 def home():
-    return 'Welcome to the User Management App'
+    return render_template("index.html")
+    # return 'Welcome to the User Management App'
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -30,7 +32,9 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
-        hashed_password = generate_password_hash(password, method='sha256')
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')  # Use SHA-256 for hashing
+        # hashed_password = sha256.hash(password)
+        # hashed_password = generate_password_hash(password, method='sha256')
         new_user = User(first_name=first_name, last_name=last_name, username=username, password=hashed_password)
 
         db.session.add(new_user)
