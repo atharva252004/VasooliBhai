@@ -6,7 +6,7 @@
 python3 main.py
 ```
 
-View website at **localhost:3000**
+View website at **localhost:5000**
 
 
 ## Dependencies List
