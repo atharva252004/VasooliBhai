@@ -8,6 +8,13 @@ app.secret_key = 'your_secret_key'  # Change this to a random secret key
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user_database.db'
 db = SQLAlchemy(app)
 
+emi_data = [
+    {"due_date": "2023-10-15", "payment_date": "2023-10-12"},
+    {"due_date": "2023-09-15", "payment_date": "2023-09-18"},
+    {"due_date": "2023-08-15", "payment_date": "2023-08-15"},
+    # Add more data as needed
+]
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100))
@@ -23,6 +30,10 @@ with app.app_context():
 def home():
     return render_template("index.html")
     # return 'Welcome to the User Management App'
+
+@app.route('/payment_history')
+def display_emi_history():
+    return render_template('payment_page.html', emi_data=emi_data)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EMI Payment History</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">EMI Payment History</h1>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Due Date</th>
+                    <th>Payment Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payment in emi_data %}
+                    <tr class="{% if payment['payment_date'] < payment['due_date'] %}table-success{% else %}table-danger{% endif %}">
+                        <td>{{ payment['due_date'] }}</td>
+                        <td>{{ payment['payment_date'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Include Bootstrap JavaScript (optional) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
